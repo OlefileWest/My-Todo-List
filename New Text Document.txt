@@ -1,0 +1,48 @@
+import { useState } from "react";
+import "./TodoList.css";
+
+function TodoList() {
+  const [inputText, setInputText] = useState("");
+  const [todos, setTodos] = useState([]);
+
+  const handleAddClick = (e) => {
+    e.preventDefault();
+    if (inputText != "") {
+      setTodos([...todos, inputText]);
+      setInputText("");
+    }
+  };
+
+  const handleDeleteButton = (index) => {
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+  };
+
+  return (
+    <div className="TodoListApp">
+      <h1>My Todo List</h1>
+      <input
+        type="text"
+        placeholder="Add a todo"
+        value={inputText}
+        onChange={(e) => setInputText(e.target.value)}
+      />
+      <button id="addButton" onClick={handleAddClick}>
+        Add
+      </button>
+      <ul>
+        {todos.map((todo, index) => (
+          <li key={index}>
+            {todo}
+            <button id="deleteButton" onClick={() => handleDeleteButton(index)}>
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default TodoList;
